@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>Caso avanzado del concepto virtual DOM</title>
+  </head>
+  <body>
+    
+    <h1>Virtual DOM - Table</h1>
+    <table id="personsTable" border="1">
+      <thead>
+        <th>ID</th>
+        <th>PERSON NAME</th>
+        <th>LAST UPDATE</th>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+
+    <script type="text/javascript">
+
+      const actualDate = new Date().getMilliseconds();
+
+      const persons = [
+        {name: 'test', lastUpdate: actualDate, element: null},
+        {name: 'test3', lastUpdate: actualDate, element: null},
+        {name: 'test4', lastUpdate: actualDate, element: null},
+        {name: 'test5', lastUpdate: actualDate, element: null},
+        {name: 'test6', lastUpdate: actualDate, element: null},
+        {name: 'test7', lastUpdate: actualDate, element: null},
+      ]
+
+      const personsTable = document.getElementById('personsTable');
+      const personsTableBody = personsTable.getElementsByTagName('tbody')[0];
+
+      function fillTable() {
+        persons.forEach((person, idx) => {
+          /*
+          // JS Para navegadores demasiado antiguos.
+
+          person.element = document.createElement('tr');
+          
+          const idCell = document.createElement('td');
+          const idText = document.createTextNode(idx);
+          idCell.appendChild(idText);
+          person.element.appendChild(idCell);
+          
+          const nameCell = document.createElement('td');
+          const nameText = document.createTextNode(person.name);
+          nameCell.appendChild(nameText);
+          person.element.appendChild(nameCell);
+          
+          const lastUpdateCell = document.createElement('td');
+          const lastUpdateText = document.createTextNode(person.lastUpdate);
+          lastUpdateCell.appendChild(lastUpdateText);
+          
+          person.element.appendChild(lastUpdateCell);
+
+          */
+
+          person.element = personsTableBody.insertRow();
+
+          const id = person.element.insertCell();
+          const name = person.element.insertCell();
+          const lastUpdate = person.element.insertCell();
+
+          id.textContent = idx;
+          name.textContent = person.name;
+          lastUpdate.textContent = person.lastUpdate;
+
+          personsTableBody.appendChild(person.element);
+        })
+      }
+
+      function updateRandomPerson() {
+        const randomIdx = Math.floor(Math.random() * persons.length);
+        
+        const randomPerson = persons[randomIdx]
+        randomPerson.lastUpdate = new Date().getMilliseconds();
+        
+        const lastUpdateCell = randomPerson.element.getElementsByTagName('td')[2];
+        lastUpdateCell.textContent = randomPerson.lastUpdate;
+      }
+
+      fillTable(); 
+      setInterval(updateRandomPerson, 1000)
+    </script>
+  </body>
+</html>

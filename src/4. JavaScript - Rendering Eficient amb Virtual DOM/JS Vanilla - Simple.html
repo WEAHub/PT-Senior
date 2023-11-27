@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Caso simple del concepto virtual DOM</title>
+  </head>
+  <body>
+    <div>
+      <h1>Virtual DOM - Contador</h1>
+      <div id="counter"></div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    const counterRef = document.getElementById("counter");
+    let counter = 0;
+    
+    function updateCounter() {
+      counter++
+      counterRef.innerHTML = "<h2>" + counter + "</h2>"
+    }
+    
+    setInterval(updateCounter, 1000);
+  </script>
+</html>
